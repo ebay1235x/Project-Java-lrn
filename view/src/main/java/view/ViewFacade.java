@@ -157,5 +157,25 @@ public class ViewFacade extends Observable implements IView, Runnable
 				break;
 		}
 	}
+	@Override
+	public HomeFrame getHome() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setHome(HomeFrame home) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void runBoardHome() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public int getStop() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

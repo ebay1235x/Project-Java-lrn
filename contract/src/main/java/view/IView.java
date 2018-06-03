@@ -17,4 +17,8 @@ public interface IView
 	public void getPurse(int x, int y);
 	public BoardFrame getBoardFrame();
 	public void setBoardFrame(BoardFrame boardFrame);
+	public HomeFrame getHome();
+	public void setHome(HomeFrame home);
+	public void runBoardHome ();
+	public int getStop();
 }

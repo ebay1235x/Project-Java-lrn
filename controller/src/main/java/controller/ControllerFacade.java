@@ -1,10 +1,7 @@
 package controller;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
-import java.util.List;
-
 import model.IModel;
 import view.thread_lorann;
 import view.IView;
@@ -49,12 +46,14 @@ public class ControllerFacade implements IController, KeyListener
      */
     public void start() throws SQLException, InterruptedException 
     {
-    	this.getView().run();
-    	this.thread.start();
-    	this.getView().getBoardFrame().addKeyListener(this);
-    	this.getView().getBoardFrame().requestFocus();
+    	this.getView().getHome();
+		
+        this.getView().run();
+       
+        this.getView().getBoardFrame().addKeyListener(this);
+        this.getView().getBoardFrame().requestFocus();
+        
     }
-
     /**
      * Gets the view.
      *
@@ -140,4 +139,11 @@ public class ControllerFacade implements IController, KeyListener
 	{
 		
 	}
+   
+    /**
+     * Gets the model.
+     *
+     * @return the model
+     */
+ 
 }

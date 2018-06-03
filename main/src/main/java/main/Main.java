@@ -29,8 +29,9 @@ public abstract class Main
      *            the arguments
      * @throws IOException 
      * @throws InterruptedException 
+     * @throws SQLException 
      */
-    public static void main(final String[] args) throws IOException, InterruptedException 
+    public static void main(final String[] args) throws IOException, InterruptedException, SQLException 
     {
     	final IModel model = new ModelFacade();
     	final ViewFacade view = new ViewFacade(model);
