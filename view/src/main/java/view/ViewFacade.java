@@ -18,7 +18,7 @@ import model.*;
 /**
  * <h1>The Class ViewFacade provides a facade of the View component.</h1>
  *
- * @author Rayan
+ * @author Rayan//test pourquoi sa s'implemente pas ?
  * @version 1.0
  */
 public class ViewFacade extends Observable implements IView, Runnable
