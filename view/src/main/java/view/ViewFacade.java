@@ -1,14 +1,11 @@
 package view;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Observable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import showboard.BoardFrame;
 import model.*;
@@ -18,13 +15,11 @@ import model.*;
 /**
  * <h1>The Class ViewFacade provides a facade of the View component.</h1>
  *
- * @author Rayan//test pourquoi sa s'implemente pas ?
+ * @author Rayan
  * @version 1.0
  */
 public class ViewFacade extends Observable implements IView, Runnable
 {
-
-	private static final int timeLoop = 100;
 	
 	private static final int sizeFrameWidth = 1280;
 	
@@ -35,6 +30,9 @@ public class ViewFacade extends Observable implements IView, Runnable
 	private IModel model;
 	
 	private BoardFrame boardFrame;
+	private HomeFrame Home;
+	
+	private int stop = 0;
     
 	/**
      * Instantiates a new view facade.
@@ -44,26 +42,38 @@ public class ViewFacade extends Observable implements IView, Runnable
         super();
         this.model = model;
         this.model.getMap().getBone().loadImage();
+        this.model.getMap().getRayan().loadImage();
         this.model.getMap().getH_Bone().loadImage();
         this.model.getMap().getV_Bone().loadImage();
         this.model.getMap().getNothing().loadImage();
         this.model.getMap().getCloseGate().loadImage();
         this.model.getMap().getLorann().loadImage();
+        this.model.getMap().getMagicBall().loadImage();
+        this.model.getMap().getMonster1().loadImage();
+        this.model.getMap().getMonster2().loadImage();
+        this.model.getMap().getMonster3().loadImage();
+        this.model.getMap().getMonster4().loadImage();
         this.model.getMap().getPurse().loadImage();
         this.model.getMap().getCrystallBall().loadImage();
         this.model.getMap().getOpenGate().loadImage();
     }
     public void run() 
-    {
+    {   
+    	Sounds.START.play();
         this.boardFrame = new BoardFrame("LORANN GAME");
         boardFrame.setDimension(new Dimension(map.getWidth(), map.getHeight()));
         boardFrame.setDisplayFrame(lorannGame);
         boardFrame.setSize(sizeFrameWidth, sizeFrameHeight);
         boardFrame.setLocationRelativeTo(null);
-   
         //Frame Configure
         this.frameConfigure(boardFrame);
     }
+    
+    
+    public void runBoardHome () 
+    {
+    	this.setHome(new HomeFrame());
+   }
        
   
     public final void frameConfigure(final BoardFrame frame) 
@@ -95,33 +105,118 @@ public class ViewFacade extends Observable implements IView, Runnable
             		case 'C':
             			frame.addSquare(model.getMap().getCrystallBall(), x, y);
             			break;
+            		case 'R':
+            			frame.addSquare(model.getMap().getRayan(), x, y);
+            			break;
             	}
             }
             frame.addPawn(this.model.getMap().getLorann());
+            frame.addPawn(this.model.getMap().getMonster1());
+            frame.addPawn(this.model.getMap().getMonster2());
+            frame.addPawn(this.model.getMap().getMonster3());
+            frame.addPawn(this.model.getMap().getMonster4());
         }
     	
     	this.addObserver(frame.getObserver());
         frame.setVisible(true);
     }
-    
-    public BoardFrame getBoardFrame() {
-		return boardFrame;
-	}
-	public void setBoardFrame(BoardFrame boardFrame) {
-		this.boardFrame = boardFrame;
-	}
-    
+        
 	public void updateMap()
 	{
 		this.setChanged();
         this.notifyObservers();
 	}
 	
+	public int addMagicBall()
+	{
+		int xMagicBall = this.model.getMap().getLorann().getX();//BHVCGPO
+		int yMagicBall = this.model.getMap().getLorann().getY();
+		int addMagicBallState = 0;
+		switch(this.model.getMap().getLorann().getDirection())
+		{
+			case 0:
+				    if(this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'B' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'H' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'V' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'C' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'G' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'P' 
+					&& this.model.getMap().mapRead[xMagicBall+1][yMagicBall] != 'O')
+					{
+						this.model.getMap().getMagicBall().setPosition(xMagicBall + 1, yMagicBall);
+						this.model.getMap().getMagicBall().setDirection(0);
+						getBoardFrame().addPawn(this.model.getMap().getMagicBall());
+						addMagicBallState = 1;
+					}
+					break;
+			case 1:
+				 	if(this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'B' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'H' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'V' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'C' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'G' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'P' 
+					&& this.model.getMap().mapRead[xMagicBall-1][yMagicBall] != 'O')
+					{
+				 		this.model.getMap().getMagicBall().setPosition(xMagicBall - 1, yMagicBall);
+				 		this.model.getMap().getMagicBall().setDirection(1);
+				 		getBoardFrame().addPawn(this.model.getMap().getMagicBall());
+				 		addMagicBallState = 1;
+					}
+					break;
+			case 2:
+					if(this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'B' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'H' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'V' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'C' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'G' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'P' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall-1] != 'O')
+					{
+						this.model.getMap().getMagicBall().setPosition(xMagicBall, yMagicBall - 1);
+						this.model.getMap().getMagicBall().setDirection(2);
+						getBoardFrame().addPawn(this.model.getMap().getMagicBall());
+						addMagicBallState = 1;
+					}
+					break;
+			case 3:
+					if(this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'B' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'H' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'V' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'C' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'G' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'P' 
+					&& this.model.getMap().mapRead[xMagicBall][yMagicBall+1] != 'O')
+					{
+						this.model.getMap().getMagicBall().setPosition(xMagicBall, yMagicBall + 1);
+						this.model.getMap().getMagicBall().setDirection(3);
+						getBoardFrame().addPawn(this.model.getMap().getMagicBall());
+						addMagicBallState = 1;
+					}
+					break;
+		}
+		return addMagicBallState;	
+	}
+	
+	
+	
+	public void removeMagicBall()
+	{
+	}
+	
 	public void OpenGate(int x, int y)
 	{
+		int numberOfCrystallBall = this.model.getMap().getNumberOfCrystallBall();
 		if (this.model.getMap().mapRead[x][y] == 'C')
 		{
-			this.updateMapElements("gateopen", x, y);
+			getBoardFrame().addSquare(model.getMap().getNothing(), x, y);
+			this.model.getMap().updateElementsOnMap(x,y);
+			numberOfCrystallBall = numberOfCrystallBall - 1;
+			this.model.getMap().setNumberOfCrystallBall(numberOfCrystallBall);
+			if (numberOfCrystallBall == 0)
+			{
+				this.updateMapElements("gateopen", x, y);
+			}
 		}
 	}
 	
@@ -130,6 +225,64 @@ public class ViewFacade extends Observable implements IView, Runnable
 		if (this.model.getMap().mapRead[x][y] == 'P')
 		{
 			this.updateMapElements("purse", x, y);
+			this.model.getMap().updateElementsOnMap(x,y);
+			int scoreLorann = this.model.getMap().getScoreLorann();
+			scoreLorann = scoreLorann + 650;
+			this.model.getMap().setScoreLorann(scoreLorann);
+		}
+	}
+	
+	public void reachingOpenGate(int x,int y)
+	{
+		ImageIcon winIcon = new ImageIcon("Ressources/images/reward.png");
+		if (this.model.getMap().mapRead[x][y] == 'O')
+		{   
+			Sounds.WON.play();
+			getBoardFrame().dispose();
+			JOptionPane.showMessageDialog(null, "You Win !!!\nYour score : " + this.model.getMap().getScoreLorann(),"Congratulation !!!", JOptionPane.INFORMATION_MESSAGE, winIcon);
+			if (this.model.getMap_choice() <= 4)
+            {
+                this.model.setMap_choice(this.model.getMap_choice() + 1);
+                this.model.connection();
+                this.model.getMap().readmapBDD();
+                this.model.getMap().calculatedNumberOfCrystallBall();
+                this.frameConfigure(boardFrame);
+               
+            }
+            else
+                this.setStop(1);
+		}
+	}
+	
+	public void reachingThreat(int x, int y)
+	{
+		ImageIcon loseIcon = new ImageIcon("Ressources/images/game_over.png");
+		
+		if 	   (this.model.getMap().mapRead[x][y] == 'G' 
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster1().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster1().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster2().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster2().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster3().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster3().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster4().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster4().getY())))
+		{  
+			getBoardFrame().dispose();
+			Sounds.LOST.play();
+			JOptionPane.showMessageDialog(null, "Unfortunately... You Lost..\nYour score : "+ this.model.getMap().getScoreLorann(), "Failer", JOptionPane.INFORMATION_MESSAGE, loseIcon);
+			this.setStop(1);
+		}
+	}
+	
+	public void monsterReachingLorann()
+	{   
+		
+		ImageIcon loseIcon = new ImageIcon("Ressources/images/game_over.png");
+		if    (((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster1().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster1().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster2().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster2().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster3().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster3().getY()))
+			|| ((this.model.getMap().getLorann().getX() == this.model.getMap().getMonster4().getX()) && (this.model.getMap().getLorann().getY() == this.model.getMap().getMonster4().getY())))
+		{
+			getBoardFrame().dispose();
+			JOptionPane.showMessageDialog(null, "Unfortunately... You Lose..\nYour score : "+ this.model.getMap().getScoreLorann(), "Too Bad...", JOptionPane.INFORMATION_MESSAGE, loseIcon);
+			this.setStop(1);
 		}
 	}
 	
@@ -138,7 +291,6 @@ public class ViewFacade extends Observable implements IView, Runnable
 		switch(Elements)
 		{
 			case "gateopen":
-				getBoardFrame().addSquare(model.getMap().getNothing(), x, y);
 				for (int yMap = 0; yMap < map.getHeight(); yMap++) 
 				{
 		            for (int xMap = 0; xMap < map.getWidth(); xMap++)
@@ -147,6 +299,7 @@ public class ViewFacade extends Observable implements IView, Runnable
 		            	{
 		            		x = xMap;
 		            		y = yMap;
+		            		this.model.getMap().updateGateOnMap(xMap, yMap);
 		            		getBoardFrame().addSquare(model.getMap().getOpenGate(), x, y);
 		            	}
 		            }
@@ -157,25 +310,31 @@ public class ViewFacade extends Observable implements IView, Runnable
 				break;
 		}
 	}
-	@Override
-	public HomeFrame getHome() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	
+    public BoardFrame getBoardFrame() {
+		return boardFrame;
 	}
-	@Override
-	public void setHome(HomeFrame home) {
-		// TODO Auto-generated method stub
-		
+	public void setBoardFrame(BoardFrame boardFrame) {
+		this.boardFrame = boardFrame;
 	}
-	@Override
-	public void runBoardHome() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
+	
 	public int getStop() {
+		return stop;
+	}
+	public void setStop(int stop) {
+		this.stop = stop;
+	}
+	public HomeFrame getHome() {
+		return Home;
+	}
+	public void setHome(HomeFrame home) {
+		Home = home;
+	}
+	@Override
+	public void getRayan(int x, int y) {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 	
 }

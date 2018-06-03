@@ -30,7 +30,7 @@ public class Elements implements ISquare
      */
     public final void loadImage() throws IOException 
     {
-        this.setImage(ImageIO.read(new File("Ressources/" + this.getImageName())));
+        this.setImage(ImageIO.read(new File("Ressources/SpriteRayanEngine/" + this.getImageName())));
     }
 
     /* Sets the image.

@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-
+/**
+ * <h1>The Class ModelFacade provides a facade of the Model component.</h1>
+ *
+ * @author Rayan
+ * @version 1.0
+ */
 public final class ModelFacade implements IModel
 {
 	private map Map;

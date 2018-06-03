@@ -8,25 +8,25 @@ import java.io.IOException;
 public class map 
 {
 	//Sprites
-	private final Elements Bone = new Elements("/ImagesRayanEngine/bone.png");
+	private final Elements Bone = new Elements("Ressources/SpriteRayanEngine/bone.png");
 		
-	private final Elements H_Bone = new Elements("/ImagesRayanEngine/horizontal_bone.png");
+	private final Elements H_Bone = new Elements("Ressources/SpriteRayanEngine/horizontal_bone.png");
 		
-	private final Elements V_Bone = new Elements("/ImagesRayanEngine/vertical_bone.png");
+	private final Elements V_Bone = new Elements("Ressources/SpriteRayanEngine/vertical_bone.png");
 
-	private final Elements Nothing = new Elements("/ImagesRayanEngine/void.png");
+	private final Elements Nothing = new Elements("Ressources/SpriteRayanEngine/void.png");
 		
-	private Elements closeGate = new Elements("/ImagesRayanEngine/gate_closed.png");
+	private Elements closeGate = new Elements("Ressources/SpriteRayanEngine/gate_closed.png");
 	
-	private Elements purse = new Elements("/ImagesRayanEngine/purse.png");
+	private Elements purse = new Elements("Ressources/SpriteRayanEngine/purse.png");
 	
-	private Elements crystallBall = new Elements("/ImagesRayanEngine/crystal_ball.png");
+	private Elements crystallBall = new Elements("Ressources/SpriteRayanEngine/crystal_ball.png");
 	
-	private Elements OpenGate = new Elements("/ImagesRayanEngine/gate_open.png");
+	private Elements OpenGate = new Elements("Ressources/SpriteRayanEngine/gate_open.png");
 	
 	private Lorann lorann;
 	
-	File f = new File("Ressources/MAP6.txt");
+	File f = new File("Ressources/SpriteRayanEngine/MAP6.txt");
     FileReader fileReader;
     public char choice;
     public char mapRead[][] = new char[width][height];
@@ -36,7 +36,7 @@ public class map
 	public map() throws IOException
     {
     	readMap();
-    	this.lorann = new Lorann("/ImagesRayanEngine/lorann_1.png", this);
+    	this.lorann = new Lorann("/lorann_1.png", this);
     }
     
 	public void readMap()

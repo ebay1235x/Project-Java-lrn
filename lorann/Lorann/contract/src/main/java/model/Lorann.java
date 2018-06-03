@@ -29,7 +29,7 @@ public class Lorann extends Mobile implements IPawn
 		int y = 0;
 		for (int i = 1; i <= 8;i++)
 		{
-			this.imageLorann[y] = ImageIO.read(new File("Ressources/lorann_" + i + ".png"));
+			this.imageLorann[y] = ImageIO.read(new File("Ressources/SpriteRayanEngine/lorann_" + i + ".png"));
 			y++;
 		}
 		
