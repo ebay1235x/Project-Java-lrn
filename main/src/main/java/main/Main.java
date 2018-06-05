@@ -1,45 +1,29 @@
 package main;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-import controller.ControllerFacade;
-import model.IModel;
-import model.ModelFacade;
-import view.ViewFacade;
+import controller.Controller;
+import model.Model;
 
 /**
  * <h1>The Class Main.</h1>
  *
- * @author Rayan
- * @version 1.0
+Rayan Rayan
+ * 
  */
-public abstract class Main 
-{
-    /**
-     * The main method.
-     *
-     * @param args
-     *            the arguments
-     * @throws IOException 
-     * @throws InterruptedException 
-     * @throws SQLException 
-     */
-    public static void main(final String[] args) throws IOException, InterruptedException, SQLException 
-    {
-    	final IModel model = new ModelFacade();
-    	final ViewFacade view = new ViewFacade(model);
-        final ControllerFacade controller = new ControllerFacade(view, model);
-        try 
-        {
-            controller.start();
+public abstract class Main {
 
-            
-        } 
-        catch (final SQLException exception) 
-        {
-            exception.printStackTrace();
-        }
-    }
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            The arguments.
+	 */
+	public static void main(final String[] args) {
+		//Instantiate new model
+		final Model model = new Model();
+		//Instantiate new controller
+		final Controller controller = new Controller(model);
+		//Run the game
+		controller.play();
+	}
 
 }
